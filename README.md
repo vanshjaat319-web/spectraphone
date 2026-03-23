@@ -1,7 +1,7 @@
 # spectraphone # 📱 SpecsFinder - AI-Powered Smartphone Database
 
-### Project Overview
-SpecsFinder is an automated smartphone specification database website. It uses **n8n automation** and **LLM (AI)** models to fetch real-time phone specifications, pros & cons, and prices, storing them directly in a Google Sheet which serves as our live database. The frontend is hosted on **GitHub Pages** and connects to the sheet via **SheetDB API** for a dynamic user experience.
+### Project Overview 
+[Live Demo](https:// vanshjaat319-web.github.io/spectraphone/).                                                                   SpecsFinder is an automated smartphone specification database website. It uses **n8n automation** and **LLM (AI)** models to fetch real-time phone specifications, pros & cons, and prices, storing them directly in a Google Sheet which serves as our live database. The frontend is hosted on **GitHub Pages** and connects to the sheet via **SheetDB API** for a dynamic user experience.
 
 ### Key Features
 - **📊 Live Database:** Real-time data sync from Google Sheets.
