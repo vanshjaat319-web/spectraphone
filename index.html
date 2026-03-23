@@ -1,1305 +1,821 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spectraphone — Premium Smartphone Specs</title>
+  <title>SpecsFinder — Smartphone Specs Database</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #080a0f;
-      --surface:   #0e1118;
-      --card:      #111520;
-      --border:    rgba(255,255,255,0.06);
-      --accent:    #00e5ff;
-      --accent2:   #7b61ff;
-      --gold:      #f5c542;
-      --text:      #e8eaf2;
-      --muted:     #6b7280;
-      --font-head: 'Syne', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --r:         14px;
-      --nav-h:     68px;
+      --bg:         #060b18;
+      --surface:    #0b1120;
+      --card:       #0f1729;
+      --card-hover: #141e35;
+      --border:     rgba(99,179,237,0.12);
+      --border2:    rgba(99,179,237,0.22);
+      --accent:     #38bdf8;
+      --accent2:    #818cf8;
+      --green:      #34d399;
+      --red:        #f87171;
+      --gold:       #fbbf24;
+      --text:       #e2e8f0;
+      --muted:      #64748b;
+      --muted2:     #94a3b8;
+      --font-h:     'Space Grotesk', sans-serif;
+      --font-b:     'Plus Jakarta Sans', sans-serif;
+      --r:          14px;
+      --r-sm:       8px;
+      --nav:        66px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.5);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
-      font-size: 15px;
+      font-family: var(--font-b);
+      font-size: 14px;
       line-height: 1.6;
-      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 4px; }
 
-    /* ─────────────────────────────────────
-       NAVBAR
-    ───────────────────────────────────── */
+    /* ─── NAV ─── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      background: rgba(8,10,15,0.72);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      position: sticky; top: 0; z-index: 200;
+      height: var(--nav);
+      display: flex; align-items: center;
+      padding: 0 clamp(16px, 4%, 48px);
+      gap: 20px;
+      background: rgba(6,11,24,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo {
+    .logo {
       display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
+      text-decoration: none; flex-shrink: 0;
     }
-    .nav-logo-icon {
-      width: 36px; height: 36px;
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 9px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 9px;
       display: flex; align-items: center; justify-content: center;
     }
-    .nav-logo-icon svg { width: 20px; height: 20px; }
-    .nav-logo-text {
-      font-family: var(--font-head);
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.5px;
+    .logo-mark svg { width: 18px; height: 18px; }
+    .logo-text {
+      font-family: var(--font-h);
+      font-size: 17px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.4px;
     }
-    .nav-logo-text span { color: var(--accent); }
+    .logo-text span { color: var(--accent); }
 
-    .nav-links {
-      display: flex; align-items: center; gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-      transition: color .2s;
+    .nav-search {
+      flex: 1; max-width: 480px; margin-left: auto;
       position: relative;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0; right: 0;
-      height: 1px; background: var(--accent);
-      transform: scaleX(0);
-      transition: transform .2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-
-    .nav-cta {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #000 !important;
-      font-weight: 700 !important;
-      font-size: 13px !important;
-      padding: 8px 20px;
-      border-radius: 50px;
-      transition: opacity .2s !important;
-    }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { opacity: 0.85 !important; color: #000 !important; }
-
-    .hamburger {
-      display: none;
-      flex-direction: column; gap: 5px; cursor: pointer;
-      background: none; border: none; padding: 4px;
-    }
-    .hamburger span {
-      display: block; width: 24px; height: 2px;
-      background: var(--text); border-radius: 2px;
-      transition: all .3s;
-    }
-
-    /* mobile nav */
-    .mobile-menu {
-      display: none;
-      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
-      background: rgba(8,10,15,0.97);
-      backdrop-filter: blur(20px);
-      padding: 24px 5% 28px;
-      border-bottom: 1px solid var(--border);
-      flex-direction: column; gap: 0;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 16px;
-      font-weight: 500;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-      transition: color .2s;
-    }
-    .mobile-menu a:hover { color: var(--accent); }
-    .mobile-menu .mob-cta {
-      margin-top: 20px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #000 !important;
-      font-weight: 700;
-      text-align: center;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-    }
-
-    /* ─────────────────────────────────────
-       HERO
-    ───────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: calc(var(--nav-h) + 60px) 5% 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* animated grid background */
-    .hero-grid {
-      position: absolute; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: gridDrift 20s linear infinite;
-    }
-    @keyframes gridDrift { to { background-position: 60px 60px; } }
-
-    /* glow blobs */
-    .hero::before, .hero::after {
-      content: ''; position: absolute; border-radius: 50%; pointer-events: none;
-    }
-    .hero::before {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 70%);
-      top: -100px; left: -150px;
-      animation: pulse 8s ease-in-out infinite;
-    }
-    .hero::after {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(123,97,255,0.12) 0%, transparent 70%);
-      bottom: -80px; right: -100px;
-      animation: pulse 8s ease-in-out 4s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.15); opacity: 0.7; }
-    }
-
-    .hero-inner { position: relative; z-index: 1; max-width: 820px; }
-
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.22);
-      border-radius: 50px;
-      padding: 6px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      animation: fadeUp .6s ease both;
-    }
-    .hero-badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
-      animation: blink 1.4s ease-in-out infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
-
-    .hero h1 {
-      font-family: var(--font-head);
-      font-size: clamp(38px, 6.5vw, 78px);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -2px;
-      color: var(--text);
-      margin-bottom: 22px;
-      animation: fadeUp .6s .1s ease both;
-    }
-    .hero h1 .grad {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(15px, 2vw, 18px);
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto 44px;
-      font-weight: 300;
-      animation: fadeUp .6s .2s ease both;
-    }
-
-    /* Search bar */
-    .search-wrap {
-      position: relative;
-      max-width: 580px;
-      margin: 0 auto;
-      animation: fadeUp .6s .3s ease both;
-    }
-    .search-icon {
-      position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    .nav-search svg {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%);
       color: var(--muted); pointer-events: none;
+      width: 16px; height: 16px;
     }
-    .search-input {
+    .nav-search input {
       width: 100%;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 50px;
-      padding: 17px 160px 17px 52px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 15px;
-      outline: none;
-      transition: border-color .25s, background .25s;
-    }
-    .search-input::placeholder { color: var(--muted); }
-    .search-input:focus {
-      border-color: var(--accent);
-      background: rgba(0,229,255,0.04);
-    }
-    .search-btn {
-      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #000;
-      border: none; border-radius: 50px;
-      padding: 11px 26px;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-    .search-btn:hover { opacity: .85; }
-
-    .hero-stats {
-      display: flex; gap: 40px; justify-content: center;
-      margin-top: 56px;
-      animation: fadeUp .6s .4s ease both;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: var(--font-head);
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -1px;
-    }
-    .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─────────────────────────────────────
-       SECTION SHARED
-    ───────────────────────────────────── */
-    section { padding: 90px 5%; }
-
-    .section-label {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-family: var(--font-head);
-      font-size: clamp(26px, 3.5vw, 40px);
-      font-weight: 800;
-      letter-spacing: -1.2px;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .section-sub {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 480px;
-    }
-
-    .section-header {
-      display: flex; align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .view-all {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      border: 1px solid rgba(0,229,255,0.3);
-      padding: 8px 20px;
-      border-radius: 50px;
-      transition: background .2s, color .2s;
-      white-space: nowrap;
-    }
-    .view-all:hover { background: var(--accent); color: #000; }
-
-    /* ─────────────────────────────────────
-       CATEGORIES BAR
-    ───────────────────────────────────── */
-    .categories { padding: 32px 5%; border-bottom: 1px solid var(--border); }
-    .cat-scroll {
-      display: flex; gap: 10px;
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .cat-scroll::-webkit-scrollbar { display: none; }
-    .cat-pill {
-      flex-shrink: 0;
-      padding: 8px 20px;
       border: 1px solid var(--border);
       border-radius: 50px;
+      padding: 9px 16px 9px 38px;
+      color: var(--text);
+      font-family: var(--font-b);
       font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all .2s;
-      white-space: nowrap;
-      background: transparent;
+      outline: none;
+      transition: border-color .2s, background .2s;
     }
-    .cat-pill:hover, .cat-pill.active {
-      background: var(--accent);
+    .nav-search input::placeholder { color: var(--muted); }
+    .nav-search input:focus {
       border-color: var(--accent);
+      background: rgba(56,189,248,0.05);
+    }
+
+    .nav-count {
+      flex-shrink: 0;
+      font-size: 12px; font-weight: 600;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 50px;
+      white-space: nowrap;
+    }
+    .nav-count span { color: var(--accent); }
+
+    /* ─── HERO STRIP ─── */
+    .hero-strip {
+      padding: 36px clamp(16px, 4%, 48px) 28px;
+      position: relative; overflow: hidden;
+    }
+    .hero-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(56,189,248,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 90% 50%, rgba(129,140,248,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; }
+    .hero-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .hero-title {
+      font-family: var(--font-h);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700; letter-spacing: -1px;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .hero-title span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub { color: var(--muted2); font-size: 14px; font-weight: 400; }
+
+    /* ─── FILTER BAR ─── */
+    .filter-bar {
+      padding: 0 clamp(16px, 4%, 48px) 20px;
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .filter-pills {
+      display: flex; gap: 8px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .filter-pills::-webkit-scrollbar { display: none; }
+    .pill {
+      flex-shrink: 0;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 12px; font-weight: 600;
+      color: var(--muted2);
+      cursor: pointer; background: transparent;
+      transition: all .2s; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: var(--accent); border-color: var(--accent);
       color: #000;
-      font-weight: 700;
     }
+    .view-toggle {
+      margin-left: auto; display: flex; gap: 4px; flex-shrink: 0;
+    }
+    .vtbtn {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--muted);
+      transition: all .2s;
+    }
+    .vtbtn:hover, .vtbtn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+    .vtbtn svg { width: 15px; height: 15px; }
 
-    /* ─────────────────────────────────────
-       FEATURED PHONES GRID
-    ───────────────────────────────────── */
-    .phones-grid {
+    /* ─── MAIN ─── */
+    main { padding: 0 clamp(16px, 4%, 48px) 60px; }
+
+    /* ─── SPINNER ─── */
+    #spinner {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 340px; gap: 20px;
+    }
+    .ring {
+      width: 52px; height: 52px;
+      border: 3px solid rgba(56,189,248,0.15);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #spinner p { color: var(--muted); font-size: 14px; }
+
+    /* ─── ERROR ─── */
+    #error-box {
+      display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      min-height: 300px; gap: 14px; text-align: center;
+    }
+    .err-icon {
+      width: 64px; height: 64px;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    #error-box h3 {
+      font-family: var(--font-h);
+      font-size: 18px; color: var(--text);
+    }
+    #error-box p { color: var(--muted); max-width: 360px; }
+    .retry-btn {
+      background: var(--accent); color: #000;
+      border: none; border-radius: 8px;
+      padding: 10px 24px;
+      font-family: var(--font-b);
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .retry-btn:hover { opacity: .85; }
+
+    /* ─── EMPTY ─── */
+    #empty-box {
+      display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      min-height: 260px; gap: 12px; text-align: center;
+    }
+    #empty-box p { color: var(--muted); }
+
+    /* ─── CARD GRID ─── */
+    #card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    #card-grid.list-view {
+      grid-template-columns: 1fr;
     }
 
+    /* ─── PHONE CARD ─── */
     .phone-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--r);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform .3s, border-color .3s, box-shadow .3s;
-      position: relative;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      animation: cardIn .35s ease both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     .phone-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(0,229,255,0.25);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.1);
+      transform: translateY(-4px);
+      border-color: var(--border2);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(56,189,248,0.08);
     }
 
-    .phone-thumb {
-      width: 100%; aspect-ratio: 4/3;
-      background: var(--surface);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
+    /* list view card override */
+    #card-grid.list-view .phone-card {
+      flex-direction: row; flex-wrap: wrap; align-items: flex-start;
+      gap: 16px;
     }
-    .phone-thumb-bg {
-      position: absolute; inset: 0;
-      opacity: 0.5;
+    #card-grid.list-view .card-top { flex: 0 0 auto; width: 100%; }
+    #card-grid.list-view .card-specs { flex: 1 1 240px; }
+    #card-grid.list-view .card-pros-cons { flex: 1 1 200px; }
+    #card-grid.list-view .card-footer { width: 100%; }
+
+    /* card top */
+    .card-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
     }
-    .phone-thumb svg { position: relative; z-index: 1; }
-    .phone-badge {
-      position: absolute; top: 12px; left: 12px; z-index: 2;
+    .card-brand {
       font-size: 10px; font-weight: 700;
-      letter-spacing: 0.8px; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 50px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 3px;
     }
-    .badge-new    { background: var(--accent); color: #000; }
-    .badge-hot    { background: #ff4757; color: #fff; }
-    .badge-sale   { background: var(--gold); color: #000; }
-    .badge-top    { background: var(--accent2); color: #fff; }
-
-    .wishlist-btn {
-      position: absolute; top: 10px; right: 10px; z-index: 2;
-      width: 32px; height: 32px;
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background .2s, border-color .2s;
+    .card-name {
+      font-family: var(--font-h);
+      font-size: 16px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.3px;
+      line-height: 1.3;
     }
-    .wishlist-btn:hover { background: rgba(255,71,87,0.2); border-color: #ff4757; }
-    .wishlist-btn svg { width: 15px; height: 15px; }
-
-    .phone-body { padding: 18px 18px 20px; }
-    .phone-brand {
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.2px;
-      color: var(--accent); margin-bottom: 4px;
-    }
-    .phone-name {
-      font-family: var(--font-head);
-      font-size: 17px; font-weight: 700;
-      color: var(--text); margin-bottom: 12px;
-      letter-spacing: -0.3px;
-    }
-
-    .specs-row {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 14px;
-    }
-    .spec-tag {
-      font-size: 11px; font-weight: 500;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      padding: 3px 9px; border-radius: 4px;
-    }
-
-    .phone-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-    }
-    .phone-price {
-      font-family: var(--font-head);
-      font-size: 20px; font-weight: 800;
-      color: var(--text); letter-spacing: -0.5px;
-    }
-    .phone-price small {
-      font-size: 12px; color: var(--muted);
-      font-family: var(--font-body);
-      font-weight: 400;
-    }
-    .compare-btn {
-      font-size: 12px; font-weight: 600;
-      color: var(--accent);
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.2);
-      padding: 7px 14px; border-radius: 8px;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .compare-btn:hover { background: rgba(0,229,255,0.18); }
-
-    /* rating */
-    .phone-rating {
-      display: flex; align-items: center; gap: 5px;
-      margin-bottom: 10px;
+    .card-rating {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
     }
     .stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
-    .rating-count { font-size: 12px; color: var(--muted); }
-
-    /* ─────────────────────────────────────
-       TRENDING STRIP
-    ───────────────────────────────────── */
-    .trending {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .trending-inner {
-      display: flex; align-items: center; gap: 0;
-      overflow-x: auto; scrollbar-width: none;
-    }
-    .trending-inner::-webkit-scrollbar { display: none; }
-    .trending-label {
-      flex-shrink: 0;
-      font-size: 10px; font-weight: 800;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent);
-      padding: 20px 24px 20px 0;
-      border-right: 1px solid var(--border);
-      margin-right: 24px;
-    }
-    .trending-item {
-      flex-shrink: 0;
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 20px;
-      border-right: 1px solid var(--border);
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .trending-item:hover { background: rgba(0,229,255,0.04); }
-    .trending-rank {
-      font-family: var(--font-head);
-      font-size: 22px; font-weight: 800;
-      color: var(--border);
-      width: 28px;
-    }
-    .trending-info h4 {
-      font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap;
-    }
-    .trending-info span { font-size: 11px; color: var(--muted); }
-
-    /* ─────────────────────────────────────
-       COMPARISON TABLE (mini)
-    ───────────────────────────────────── */
-    .compare-section { background: var(--surface); }
-    .compare-table-wrap { overflow-x: auto; }
-    .compare-table {
-      width: 100%; min-width: 600px;
-      border-collapse: collapse;
-    }
-    .compare-table th {
-      text-align: left;
-      padding: 14px 18px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-    }
-    .compare-table td {
-      padding: 14px 18px;
-      font-size: 14px;
+    .rating-val {
+      font-family: var(--font-h);
+      font-size: 18px; font-weight: 700;
       color: var(--text);
-      border-bottom: 1px solid var(--border);
-    }
-    .compare-table tr:last-child td { border-bottom: none; }
-    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .compare-table .phone-col {
-      font-family: var(--font-head);
-      font-weight: 700; font-size: 14px;
-    }
-    .check { color: #2ed573; }
-    .cross { color: #ff4757; }
-    .tag-chip {
-      display: inline-block;
-      padding: 2px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600;
-      background: rgba(0,229,255,0.1); color: var(--accent);
     }
 
-    /* ─────────────────────────────────────
-       NEWSLETTER
-    ───────────────────────────────────── */
-    .newsletter {
-      background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(123,97,255,0.06));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      text-align: center;
+    /* specs */
+    .card-specs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
-    .newsletter .section-title { margin: 0 auto 10px; }
-    .newsletter .section-sub { margin: 0 auto 30px; }
-    .nl-form {
-      display: flex; gap: 10px; max-width: 460px; margin: 0 auto;
-      flex-wrap: wrap; justify-content: center;
-    }
-    .nl-input {
-      flex: 1; min-width: 220px;
-      background: rgba(255,255,255,0.05);
+    .spec-item {
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 13px 18px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      transition: border-color .2s;
+      border-radius: var(--r-sm);
+      padding: 8px 10px;
     }
-    .nl-input::placeholder { color: var(--muted); }
-    .nl-input:focus { border-color: var(--accent); }
-    .nl-btn {
+    .spec-key {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 2px;
+    }
+    .spec-val {
+      font-size: 13px; font-weight: 600;
+      color: var(--text); word-break: break-word;
+    }
+    .spec-item.full { grid-column: 1/-1; }
+
+    /* pros cons */
+    .card-pros-cons { display: flex; flex-direction: column; gap: 8px; }
+    .pc-block {}
+    .pc-title {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pc-title.pro { color: var(--green); }
+    .pc-title.con { color: var(--red); }
+    .pc-list { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .pc-list li {
+      font-size: 12px; color: var(--muted2);
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .pc-list li::before { flex-shrink: 0; margin-top: 2px; }
+    .pc-list.pro-list li::before { content: '✓'; color: var(--green); font-weight: 700; }
+    .pc-list.con-list li::before { content: '✗'; color: var(--red); font-weight: 700; }
+
+    /* footer */
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .card-price {
+      font-family: var(--font-h);
+      font-size: 18px; font-weight: 700;
+      color: var(--text);
+    }
+    .card-price small {
+      font-size: 11px; color: var(--muted);
+      font-family: var(--font-b); font-weight: 400;
+    }
+    .card-btn {
+      font-size: 12px; font-weight: 700;
+      color: #000;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #000; border: none; border-radius: 10px;
-      padding: 13px 28px;
-      font-family: var(--font-body);
-      font-size: 14px; font-weight: 700;
-      cursor: pointer;
-      transition: opacity .2s;
+      border: none; border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer; transition: opacity .2s;
+      text-decoration: none; display: inline-block;
     }
-    .nl-btn:hover { opacity: .85; }
+    .card-btn:hover { opacity: .85; }
 
-    /* ─────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────── */
-    footer {
-      padding: 60px 5% 30px;
-      border-top: 1px solid var(--border);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.8fr repeat(3, 1fr);
-      gap: 40px;
-      margin-bottom: 48px;
-    }
-    .footer-brand p {
-      color: var(--muted); font-size: 14px;
-      max-width: 260px; margin: 12px 0 20px;
-      font-weight: 300; line-height: 1.7;
-    }
-    .socials { display: flex; gap: 10px; }
-    .soc-btn {
-      width: 36px; height: 36px;
-      background: rgba(255,255,255,0.05);
+    /* ─── TABLE VIEW ─── */
+    #table-wrap {
+      display: none;
+      overflow-x: auto;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background .2s, border-color .2s;
-      text-decoration: none; color: var(--muted);
-      font-size: 13px; font-weight: 700;
+      border-radius: var(--r);
     }
-    .soc-btn:hover { background: var(--accent); border-color: var(--accent); color: #000; }
-    .footer-col h5 {
-      font-family: var(--font-head);
-      font-size: 13px; font-weight: 700;
-      color: var(--text);
-      margin-bottom: 16px;
-      letter-spacing: 0.3px;
+    table {
+      width: 100%; border-collapse: collapse; min-width: 860px;
     }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a {
-      text-decoration: none;
+    thead tr {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      padding: 12px 16px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
       color: var(--muted);
-      font-size: 14px;
+      text-align: left; white-space: nowrap;
+      cursor: pointer; user-select: none;
       transition: color .2s;
     }
-    .footer-col a:hover { color: var(--accent); }
-    .footer-bottom {
-      padding-top: 24px;
+    th:hover { color: var(--accent); }
+    th .sort-icon { opacity: 0.4; margin-left: 4px; }
+    th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(56,189,248,0.04); }
+    td {
+      padding: 13px 16px;
+      font-size: 13px; color: var(--text);
+      vertical-align: top;
+    }
+    .td-name { font-family: var(--font-h); font-weight: 700; white-space: nowrap; }
+    .td-brand {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--accent); margin-top: 2px;
+    }
+    .td-price { font-family: var(--font-h); font-weight: 700; white-space: nowrap; }
+    .td-stars { color: var(--gold); }
+    .td-pros { color: var(--green); font-size: 12px; }
+    .td-cons { color: var(--red); font-size: 12px; }
+    .td-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(56,189,248,0.1);
+      color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
       border-top: 1px solid var(--border);
+      padding: 24px clamp(16px, 4%, 48px);
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
+      flex-wrap: wrap; gap: 10px;
     }
-    .footer-bottom p { font-size: 13px; color: var(--muted); }
-    .footer-bottom a { color: var(--accent); text-decoration: none; }
+    footer p { font-size: 12px; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; }
 
-    /* ─────────────────────────────────────
-       TABLET — max 1024px
-    ───────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* ─────────────────────────────────────
-       TABLET — max 768px
-    ───────────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 0 4%; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-
-      .hero { padding: calc(var(--nav-h) + 40px) 4% 60px; }
-      .hero-stats { gap: 24px; }
-      .stat-num { font-size: 22px; }
-
-      .search-input { padding-right: 130px; font-size: 14px; }
-      .search-btn { padding: 10px 18px; font-size: 13px; }
-
-      section { padding: 60px 4%; }
-      .phones-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
-    }
-
-    /* ─────────────────────────────────────
-       MOBILE — max 480px
-    ───────────────────────────────────── */
-    @media (max-width: 480px) {
-      .hero h1 { letter-spacing: -1px; }
-      .hero-stats { gap: 16px; flex-wrap: wrap; justify-content: center; }
-      .search-input { padding: 15px 14px 15px 46px; padding-right: 14px; border-radius: 12px; }
-      .search-btn { position: static; transform: none; width: 100%; border-radius: 12px; margin-top: 10px; padding: 14px; }
-      .search-wrap { max-width: 100%; }
-      .phones-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .phone-body { padding: 12px 12px 14px; }
-      .phone-name { font-size: 14px; }
-      .phone-price { font-size: 16px; }
-      .compare-btn { display: none; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .section-header { flex-direction: column; align-items: flex-start; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .nav-count { display: none; }
+      .hero-strip { padding-top: 24px; }
+      #card-grid { grid-template-columns: 1fr; }
+      .card-specs { grid-template-columns: 1fr; }
+      .view-toggle { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════ NAVBAR ══════════ -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">
-    <div class="nav-logo-icon">
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="2" width="14" height="20" rx="3" stroke="#000" stroke-width="2"/>
-        <circle cx="12" cy="17.5" r="1.2" fill="#000"/>
-        <rect x="9" y="5" width="6" height="1.5" rx="0.75" fill="#000"/>
+        <rect x="5" y="2" width="14" height="20" rx="3" stroke="#000" stroke-width="2.2"/>
+        <circle cx="12" cy="17.5" r="1.3" fill="#000"/>
+        <rect x="9" y="5.5" width="6" height="1.5" rx="0.75" fill="#000"/>
       </svg>
     </div>
-    <span class="nav-logo-text">Spectra<span>phone</span></span>
+    <span class="logo-text">Specs<span>Finder</span></span>
   </a>
 
-  <ul class="nav-links">
-    <li><a href="#featured">Phones</a></li>
-    <li><a href="#trending">Trending</a></li>
-    <li><a href="#compare">Compare</a></li>
-    <li><a href="#">Brands</a></li>
-    <li><a href="#newsletter" class="nav-cta">Get Alerts</a></li>
-  </ul>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search phone, brand, processor…"/>
+  </div>
 
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-count" id="navCount">Loading…</div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#featured" onclick="closeMenu()">Phones</a>
-  <a href="#trending" onclick="closeMenu()">Trending</a>
-  <a href="#compare" onclick="closeMenu()">Compare</a>
-  <a href="#" onclick="closeMenu()">Brands</a>
-  <a href="#newsletter" class="mob-cta" onclick="closeMenu()">Get Alerts</a>
-</div>
-
-<!-- ══════════ HERO ══════════ -->
-<section class="hero">
-  <div class="hero-grid"></div>
+<!-- ══ HERO ══ -->
+<div class="hero-strip">
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      2025 Specs Database Updated
-    </div>
-    <h1>Find Your <span class="grad">Perfect Phone</span><br>Spec by Spec.</h1>
-    <p class="hero-sub">Compare processors, cameras, and battery life across 3,000+ smartphones. Deep specs. Zero guesswork.</p>
-
-    <div class="search-wrap">
-      <span class="search-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </span>
-      <input class="search-input" type="text" placeholder="Search iPhone 16 Pro, Galaxy S25, Pixel 9…" id="searchInput"/>
-      <button class="search-btn" onclick="handleSearch()">Search</button>
-    </div>
-
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">3,200+</div><div class="stat-label">Phones Listed</div></div>
-      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Brands Covered</div></div>
-      <div class="stat"><div class="stat-num">1.2M</div><div class="stat-label">Monthly Readers</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CATEGORIES ══════════ -->
-<div class="categories">
-  <div class="cat-scroll" id="catScroll">
-    <button class="cat-pill active" onclick="filterCat(this)">All Phones</button>
-    <button class="cat-pill" onclick="filterCat(this)">Flagship</button>
-    <button class="cat-pill" onclick="filterCat(this)">Mid-Range</button>
-    <button class="cat-pill" onclick="filterCat(this)">Budget</button>
-    <button class="cat-pill" onclick="filterCat(this)">Foldables</button>
-    <button class="cat-pill" onclick="filterCat(this)">5G Ready</button>
-    <button class="cat-pill" onclick="filterCat(this)">Camera Kings</button>
-    <button class="cat-pill" onclick="filterCat(this)">Gaming</button>
-    <button class="cat-pill" onclick="filterCat(this)">Long Battery</button>
+    <div class="hero-label">📱 Live Database</div>
+    <h1 class="hero-title">Compare Phones <span>Spec by Spec</span></h1>
+    <p class="hero-sub">Live data from Google Sheets · Prices · Pros & Cons · Ratings</p>
   </div>
 </div>
 
-<!-- ══════════ FEATURED PHONES ══════════ -->
-<section id="featured">
-  <div class="section-header">
-    <div>
-      <span class="section-label">⚡ Featured</span>
-      <h2 class="section-title">Top Smartphones 2025</h2>
-      <p class="section-sub">Curated picks with full spec breakdowns and expert scores.</p>
-    </div>
-    <a href="#" class="view-all">View All Phones →</a>
+<!-- ══ FILTER BAR ══ -->
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <div class="filter-pills" id="brandPills">
+    <button class="pill active" data-brand="all">All Brands</button>
   </div>
-
-  <div class="phones-grid">
-
-    <!-- Card 1 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#0a1628,#1a2744)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-new">NEW</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#1c2540" stroke="#00e5ff" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#0d1530"/>
-          <circle cx="40" cy="122" r="6" fill="#0d1530" stroke="#00e5ff" stroke-width="1"/>
-          <rect x="28" y="6" width="14" height="3" rx="1.5" fill="#0d1530"/>
-          <circle cx="43" cy="7.5" r="1.5" fill="#00e5ff"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#111d3e"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#1c2a52"/>
-          <rect x="22" y="50" width="24" height="3" rx="1.5" fill="#1c2a52"/>
-          <circle cx="40" cy="30" r="10" fill="none" stroke="#00e5ff" stroke-width="0.8" opacity="0.5"/>
-          <circle cx="40" cy="30" r="5" fill="#00e5ff" opacity="0.3"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">Apple</div>
-        <div class="phone-name">iPhone 16 Pro Max</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(4,821)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">A18 Pro</span>
-          <span class="spec-tag">48MP</span>
-          <span class="spec-tag">6.9"</span>
-          <span class="spec-tag">5G</span>
-          <span class="spec-tag">ProMotion</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹1,34,900 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#0f1a14,#162a1e)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-hot">HOT</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#1a2a1f" stroke="#2ed573" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#0f1a14"/>
-          <circle cx="40" cy="122" r="6" fill="#0f1a14" stroke="#2ed573" stroke-width="1"/>
-          <rect x="28" y="6" width="14" height="3" rx="1.5" fill="#0f1a14"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#162216"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#1e3220"/>
-          <rect x="22" y="50" width="28" height="3" rx="1.5" fill="#1e3220"/>
-          <circle cx="36" cy="28" r="8" fill="none" stroke="#2ed573" stroke-width="0.8" opacity="0.5"/>
-          <circle cx="44" cy="32" r="5" fill="none" stroke="#2ed573" stroke-width="0.8" opacity="0.4"/>
-          <circle cx="36" cy="28" r="2" fill="#2ed573" opacity="0.6"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">Samsung</div>
-        <div class="phone-name">Galaxy S25 Ultra</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(3,294)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">Snapdragon 8 Elite</span>
-          <span class="spec-tag">200MP</span>
-          <span class="spec-tag">6.9"</span>
-          <span class="spec-tag">S Pen</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹1,29,999 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#1a0f2e,#280d4a)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-top">TOP</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#1e1240" stroke="#7b61ff" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#12093a"/>
-          <circle cx="40" cy="122" r="6" fill="#12093a" stroke="#7b61ff" stroke-width="1"/>
-          <rect x="31" y="6" width="12" height="3" rx="1.5" fill="#12093a"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#180e44"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#221660"/>
-          <rect x="22" y="50" width="20" height="3" rx="1.5" fill="#221660"/>
-          <path d="M30 28 L40 20 L50 28 L46 36 L34 36 Z" fill="none" stroke="#7b61ff" stroke-width="0.8" opacity="0.7"/>
-          <circle cx="40" cy="28" r="4" fill="#7b61ff" opacity="0.4"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">Google</div>
-        <div class="phone-name">Pixel 9 Pro XL</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★☆</span>
-          <span class="rating-count">(1,830)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">Tensor G4</span>
-          <span class="spec-tag">50MP</span>
-          <span class="spec-tag">6.8"</span>
-          <span class="spec-tag">AI Cam</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹1,09,999 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#1a1200,#2a1e00)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-sale">DEAL</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#281e0a" stroke="#f5c542" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#1a1200"/>
-          <circle cx="40" cy="122" r="6" fill="#1a1200" stroke="#f5c542" stroke-width="1"/>
-          <rect x="28" y="6" width="24" height="3" rx="1.5" fill="#1a1200"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#201800"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#2e2200"/>
-          <rect x="22" y="50" width="30" height="3" rx="1.5" fill="#2e2200"/>
-          <rect x="26" y="22" width="28" height="20" rx="3" fill="none" stroke="#f5c542" stroke-width="0.8" opacity="0.6"/>
-          <circle cx="40" cy="32" r="4" fill="#f5c542" opacity="0.4"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">OnePlus</div>
-        <div class="phone-name">OnePlus 13</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★☆</span>
-          <span class="rating-count">(2,105)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">SD 8 Elite</span>
-          <span class="spec-tag">50MP</span>
-          <span class="spec-tag">6.82"</span>
-          <span class="spec-tag">100W</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹69,999 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 5 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#001a1a,#002828)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-new">NEW</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#0a2020" stroke="#00d4aa" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#001818"/>
-          <circle cx="40" cy="122" r="6" fill="#001818" stroke="#00d4aa" stroke-width="1"/>
-          <rect x="32" y="6" width="10" height="3" rx="1.5" fill="#001818"/>
-          <circle cx="44" cy="7.5" r="1.5" fill="#00d4aa"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#001e1e"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#003030"/>
-          <rect x="22" y="50" width="26" height="3" rx="1.5" fill="#003030"/>
-          <circle cx="40" cy="30" r="9" fill="none" stroke="#00d4aa" stroke-width="0.8" opacity="0.5"/>
-          <circle cx="40" cy="30" r="4" fill="#00d4aa" opacity="0.35"/>
-          <circle cx="40" cy="30" r="1.5" fill="#00d4aa" opacity="0.8"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">Xiaomi</div>
-        <div class="phone-name">Xiaomi 15 Ultra</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-count">(987)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">SD 8 Elite</span>
-          <span class="spec-tag">200MP</span>
-          <span class="spec-tag">6.73"</span>
-          <span class="spec-tag">90W</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹89,999 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 6 -->
-    <div class="phone-card">
-      <div class="phone-thumb">
-        <div class="phone-thumb-bg" style="background: linear-gradient(135deg,#1a0008,#2a0010)"></div>
-        <div class="wishlist-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <span class="phone-badge badge-hot">HOT</span>
-        <svg width="80" height="140" viewBox="0 0 80 140" fill="none">
-          <rect x="10" y="4" width="60" height="132" rx="12" fill="#200a12" stroke="#ff4757" stroke-width="1.5"/>
-          <rect x="15" y="14" width="50" height="90" rx="6" fill="#14000a"/>
-          <circle cx="40" cy="122" r="6" fill="#14000a" stroke="#ff4757" stroke-width="1"/>
-          <rect x="30" y="6" width="16" height="3" rx="1.5" fill="#14000a"/>
-          <rect x="18" y="17" width="44" height="84" rx="4" fill="#180810"/>
-          <rect x="22" y="42" width="36" height="4" rx="2" fill="#2a1020"/>
-          <rect x="22" y="50" width="22" height="3" rx="1.5" fill="#2a1020"/>
-          <path d="M34 20 L46 20 L46 38 L34 38 Z" fill="none" stroke="#ff4757" stroke-width="0.8" opacity="0.6"/>
-          <path d="M37 24 L43 24 L43 34 L37 34 Z" fill="#ff4757" opacity="0.25"/>
-          <circle cx="40" cy="29" r="2" fill="#ff4757" opacity="0.8"/>
-        </svg>
-      </div>
-      <div class="phone-body">
-        <div class="phone-brand">ASUS</div>
-        <div class="phone-name">ROG Phone 9 Pro</div>
-        <div class="phone-rating">
-          <span class="stars">★★★★☆</span>
-          <span class="rating-count">(1,456)</span>
-        </div>
-        <div class="specs-row">
-          <span class="spec-tag">SD 8 Elite</span>
-          <span class="spec-tag">50MP</span>
-          <span class="spec-tag">6.78"</span>
-          <span class="spec-tag">165Hz</span>
-        </div>
-        <div class="phone-footer">
-          <div class="phone-price">₹99,999 <small>/ from</small></div>
-          <button class="compare-btn">+ Compare</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════ TRENDING STRIP ══════════ -->
-<div class="trending" id="trending">
-  <div style="padding: 0 5%;">
-    <div class="trending-inner">
-      <div class="trending-label">🔥 Trending</div>
-      <div class="trending-item">
-        <div class="trending-rank">01</div>
-        <div class="trending-info"><h4>iPhone 16 Pro Max</h4><span>Apple · A18 Pro</span></div>
-      </div>
-      <div class="trending-item">
-        <div class="trending-rank">02</div>
-        <div class="trending-info"><h4>Galaxy S25 Ultra</h4><span>Samsung · SD 8 Elite</span></div>
-      </div>
-      <div class="trending-item">
-        <div class="trending-rank">03</div>
-        <div class="trending-info"><h4>Pixel 9 Pro</h4><span>Google · Tensor G4</span></div>
-      </div>
-      <div class="trending-item">
-        <div class="trending-rank">04</div>
-        <div class="trending-info"><h4>Xiaomi 15 Ultra</h4><span>Xiaomi · SD 8 Elite</span></div>
-      </div>
-      <div class="trending-item">
-        <div class="trending-rank">05</div>
-        <div class="trending-info"><h4>OnePlus 13</h4><span>OnePlus · SD 8 Elite</span></div>
-      </div>
-      <div class="trending-item">
-        <div class="trending-rank">06</div>
-        <div class="trending-info"><h4>ROG Phone 9 Pro</h4><span>ASUS · 165Hz</span></div>
-      </div>
-    </div>
+  <div class="view-toggle">
+    <button class="vtbtn active" id="btnCard" title="Card View" onclick="setView('card')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </button>
+    <button class="vtbtn" id="btnTable" title="Table View" onclick="setView('table')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+      </svg>
+    </button>
   </div>
 </div>
 
-<!-- ══════════ COMPARISON TABLE ══════════ -->
-<section class="compare-section" id="compare">
-  <div class="section-header">
-    <div>
-      <span class="section-label">⚖️ Compare</span>
-      <h2 class="section-title">Side-by-Side Specs</h2>
-      <p class="section-sub">Quick glance at the top flagships of 2025.</p>
-    </div>
-    <a href="#" class="view-all">Full Compare Tool →</a>
+<!-- ══ MAIN ══ -->
+<main>
+  <!-- Spinner -->
+  <div id="spinner">
+    <div class="ring"></div>
+    <p>Fetching specs from database…</p>
   </div>
-  <div class="compare-table-wrap">
-    <table class="compare-table">
+
+  <!-- Error -->
+  <div id="error-box">
+    <div class="err-icon">⚠️</div>
+    <h3>Could not load data</h3>
+    <p id="errorMsg">There was a problem connecting to the database. Please check your internet connection and try again.</p>
+    <button class="retry-btn" onclick="loadData()">↺ Retry</button>
+  </div>
+
+  <!-- Empty -->
+  <div id="empty-box">
+    <div style="font-size:40px">🔍</div>
+    <p>No phones match your search. Try a different keyword.</p>
+  </div>
+
+  <!-- Card View -->
+  <div id="card-grid"></div>
+
+  <!-- Table View -->
+  <div id="table-wrap">
+    <table>
       <thead>
         <tr>
-          <th>Spec</th>
-          <th>iPhone 16 Pro Max</th>
-          <th>Galaxy S25 Ultra</th>
-          <th>Pixel 9 Pro XL</th>
-          <th>OnePlus 13</th>
+          <th onclick="sortTable('phone_name')">Phone <span class="sort-icon">↕</span></th>
+          <th onclick="sortTable('brand')">Brand <span class="sort-icon">↕</span></th>
+          <th onclick="sortTable('processor')">Processor <span class="sort-icon">↕</span></th>
+          <th onclick="sortTable('RAM_Storage')">RAM / Storage <span class="sort-icon">↕</span></th>
+          <th onclick="sortTable('Amazon_price')">Price <span class="sort-icon">↕</span></th>
+          <th>Pros</th>
+          <th>Cons</th>
+          <th onclick="sortTable('rating')">Rating <span class="sort-icon">↕</span></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Chipset</td>
-          <td class="phone-col">Apple A18 Pro</td>
-          <td class="phone-col">Snapdragon 8 Elite</td>
-          <td class="phone-col">Tensor G4</td>
-          <td class="phone-col">Snapdragon 8 Elite</td>
-        </tr>
-        <tr>
-          <td>Display</td>
-          <td>6.9" OLED 120Hz</td>
-          <td>6.9" AMOLED 120Hz</td>
-          <td>6.8" OLED 120Hz</td>
-          <td>6.82" AMOLED 120Hz</td>
-        </tr>
-        <tr>
-          <td>Main Camera</td>
-          <td><span class="tag-chip">48 MP</span></td>
-          <td><span class="tag-chip">200 MP</span></td>
-          <td><span class="tag-chip">50 MP</span></td>
-          <td><span class="tag-chip">50 MP</span></td>
-        </tr>
-        <tr>
-          <td>Battery</td>
-          <td>4,685 mAh</td>
-          <td>5,000 mAh</td>
-          <td>5,100 mAh</td>
-          <td>6,000 mAh</td>
-        </tr>
-        <tr>
-          <td>Fast Charge</td>
-          <td>30W</td>
-          <td>45W</td>
-          <td>37W</td>
-          <td>100W</td>
-        </tr>
-        <tr>
-          <td>5G</td>
-          <td><span class="check">✔ Yes</span></td>
-          <td><span class="check">✔ Yes</span></td>
-          <td><span class="check">✔ Yes</span></td>
-          <td><span class="check">✔ Yes</span></td>
-        </tr>
-        <tr>
-          <td>Stylus</td>
-          <td><span class="cross">✘ No</span></td>
-          <td><span class="check">✔ S Pen</span></td>
-          <td><span class="cross">✘ No</span></td>
-          <td><span class="cross">✘ No</span></td>
-        </tr>
-        <tr>
-          <td>Starting Price</td>
-          <td>₹1,34,900</td>
-          <td>₹1,29,999</td>
-          <td>₹1,09,999</td>
-          <td>₹69,999</td>
-        </tr>
-      </tbody>
+      <tbody id="tableBody"></tbody>
     </table>
   </div>
-</section>
+</main>
 
-<!-- ══════════ NEWSLETTER ══════════ -->
-<section class="newsletter" id="newsletter">
-  <span class="section-label">📬 Stay Ahead</span>
-  <h2 class="section-title">Never Miss a Launch</h2>
-  <p class="section-sub">Get spec alerts, price drops, and exclusive reviews straight to your inbox.</p>
-  <div class="nl-form">
-    <input class="nl-input" type="email" placeholder="you@example.com" id="emailInput"/>
-    <button class="nl-btn" onclick="handleSubscribe()">Subscribe Free</button>
-  </div>
-</section>
-
-<!-- ══════════ FOOTER ══════════ -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#" class="nav-logo" style="display:inline-flex;">
-        <div class="nav-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="5" y="2" width="14" height="20" rx="3" stroke="#000" stroke-width="2"/>
-            <circle cx="12" cy="17.5" r="1.2" fill="#000"/>
-            <rect x="9" y="5" width="6" height="1.5" rx="0.75" fill="#000"/>
-          </svg>
-        </div>
-        <span class="nav-logo-text">Spectra<span>phone</span></span>
-      </a>
-      <p>The internet's most comprehensive smartphone specification database. Built for tech lovers, trusted by millions.</p>
-      <div class="socials">
-        <a class="soc-btn" href="#" aria-label="Twitter">𝕏</a>
-        <a class="soc-btn" href="#" aria-label="Instagram">IG</a>
-        <a class="soc-btn" href="#" aria-label="YouTube">YT</a>
-        <a class="soc-btn" href="#" aria-label="Reddit">RD</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Explore</h5>
-      <ul>
-        <li><a href="#">All Smartphones</a></li>
-        <li><a href="#">Flagship Phones</a></li>
-        <li><a href="#">Best Cameras</a></li>
-        <li><a href="#">5G Phones</a></li>
-        <li><a href="#">Budget Picks</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Brands</h5>
-      <ul>
-        <li><a href="#">Apple</a></li>
-        <li><a href="#">Samsung</a></li>
-        <li><a href="#">Google</a></li>
-        <li><a href="#">OnePlus</a></li>
-        <li><a href="#">Xiaomi</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Company</h5>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Advertise</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">GitHub</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 <a href="#">Spectraphone</a>. All rights reserved. Not affiliated with any manufacturer.</p>
-    <p>Made with ♥ for smartphone enthusiasts.</p>
-  </div>
+  <p>© 2025 <a href="#">SpecsFinder</a> · Data via <a href="https://sheetdb.io" target="_blank">SheetDB API</a></p>
+  <p id="lastUpdated"></p>
 </footer>
 
 <script>
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
-  function closeMenu() {
-    mobileMenu.classList.remove('open');
+  /* ══════════════════════════════════
+     CONFIG
+  ══════════════════════════════════ */
+  const API_URL = 'https://sheetdb.io/api/v1/230q64nidgmrh';
+  let allData    = [];
+  let filtered   = [];
+  let currentView = 'card';
+  let sortKey    = '';
+  let sortAsc    = true;
+  let activeBrand = 'all';
+
+  /* ══════════════════════════════════
+     FETCH
+  ══════════════════════════════════ */
+  async function loadData() {
+    show('spinner');
+    try {
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) throw new Error('Empty dataset');
+      allData = data;
+      filtered = [...allData];
+      buildBrandPills();
+      renderAll();
+      document.getElementById('navCount').innerHTML =
+        `<span>${allData.length}</span> phones`;
+      document.getElementById('lastUpdated').textContent =
+        'Updated: ' + new Date().toLocaleString();
+      show('content');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('errorMsg').textContent =
+        err.message || 'Failed to fetch data.';
+      show('error-box');
+    }
   }
 
-  // Category filter (visual only)
-  function filterCat(el) {
-    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  function show(state) {
+    document.getElementById('spinner').style.display   = state === 'spinner'   ? 'flex'  : 'none';
+    document.getElementById('error-box').style.display = state === 'error-box' ? 'flex'  : 'none';
+    document.getElementById('empty-box').style.display = state === 'empty'     ? 'flex'  : 'none';
+    if (state === 'content') {
+      document.getElementById('card-grid').style.display   = currentView === 'card'  ? 'grid'  : 'none';
+      document.getElementById('table-wrap').style.display  = currentView === 'table' ? 'block' : 'none';
+    } else {
+      document.getElementById('card-grid').style.display  = 'none';
+      document.getElementById('table-wrap').style.display = 'none';
+    }
+  }
+
+  /* ══════════════════════════════════
+     BRAND PILLS
+  ══════════════════════════════════ */
+  function buildBrandPills() {
+    const brands = [...new Set(allData.map(p => (p.brand || '').trim()).filter(Boolean))].sort();
+    const cont = document.getElementById('brandPills');
+    brands.forEach(b => {
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.dataset.brand = b;
+      btn.textContent = b;
+      btn.onclick = () => filterByBrand(b, btn);
+      cont.appendChild(btn);
+    });
+  }
+
+  function filterByBrand(brand, el) {
+    activeBrand = brand;
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
+    applyFilters();
   }
 
-  // Navbar scroll
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    nav.style.background = window.scrollY > 40
-      ? 'rgba(8,10,15,0.95)' : 'rgba(8,10,15,0.72)';
-  });
+  /* ══════════════════════════════════
+     SEARCH + FILTER
+  ══════════════════════════════════ */
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
 
-  // Search
-  function handleSearch() {
-    const q = document.getElementById('searchInput').value.trim();
-    if (q) alert('🔍 Searching specs for: "' + q + '"\n\n(Connect your backend to enable live search)');
-    else alert('Please enter a phone name or model.');
+  function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    filtered = allData.filter(p => {
+      const brandMatch = activeBrand === 'all' || (p.brand || '').trim() === activeBrand;
+      const searchMatch = !q ||
+        Object.values(p).some(v => String(v).toLowerCase().includes(q));
+      return brandMatch && searchMatch;
+    });
+    if (sortKey) applySortToFiltered();
+    renderAll();
+    document.getElementById('navCount').innerHTML =
+      `<span>${filtered.length}</span> / ${allData.length} phones`;
   }
-  document.getElementById('searchInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSearch();
-  });
 
-  // Subscribe
-  function handleSubscribe() {
-    const e = document.getElementById('emailInput').value.trim();
-    if (e && e.includes('@'))
-      alert('🎉 Subscribed successfully!\n\nYou\'ll receive spec alerts at: ' + e);
-    else alert('Please enter a valid email address.');
+  /* ══════════════════════════════════
+     SORT
+  ══════════════════════════════════ */
+  function sortTable(key) {
+    if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
+    document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
+    document.querySelectorAll('th').forEach(th => {
+      if (th.getAttribute('onclick') === `sortTable('${key}')`) th.classList.add('sorted');
+    });
+    applySortToFiltered();
+    renderAll();
   }
+
+  function applySortToFiltered() {
+    filtered.sort((a, b) => {
+      let av = a[sortKey] || '', bv = b[sortKey] || '';
+      const an = parseFloat(String(av).replace(/[^0-9.]/g, ''));
+      const bn = parseFloat(String(bv).replace(/[^0-9.]/g, ''));
+      if (!isNaN(an) && !isNaN(bn)) return sortAsc ? an - bn : bn - an;
+      return sortAsc ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
+    });
+  }
+
+  /* ══════════════════════════════════
+     VIEW TOGGLE
+  ══════════════════════════════════ */
+  function setView(v) {
+    currentView = v;
+    document.getElementById('btnCard').classList.toggle('active', v === 'card');
+    document.getElementById('btnTable').classList.toggle('active', v === 'table');
+    renderAll();
+    if (filtered.length > 0) show('content');
+  }
+
+  /* ══════════════════════════════════
+     RENDER
+  ══════════════════════════════════ */
+  function renderAll() {
+    if (filtered.length === 0) { show('empty'); return; }
+    if (currentView === 'card') renderCards(); else renderTable();
+    show('content');
+  }
+
+  /* helpers */
+  function stars(r) {
+    const n = Math.round(parseFloat(r) || 0);
+    return '★'.repeat(Math.min(n,5)) + '☆'.repeat(Math.max(0,5-n));
+  }
+  function splitList(str) {
+    if (!str) return [];
+    return String(str).split(/[,;|\n]+/).map(s => s.trim()).filter(Boolean);
+  }
+  function fmtPrice(p) {
+    if (!p) return 'N/A';
+    const s = String(p).trim();
+    if (s.startsWith('₹') || s.startsWith('$') || s.startsWith('£')) return s;
+    const n = parseFloat(s.replace(/[^0-9.]/g,''));
+    return isNaN(n) ? s : '₹' + n.toLocaleString('en-IN');
+  }
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ── CARDS ── */
+  function renderCards() {
+    const grid = document.getElementById('card-grid');
+    grid.innerHTML = '';
+    filtered.forEach((p, i) => {
+      const pros = splitList(p.pros);
+      const cons = splitList(p.cons);
+      const ratingNum = parseFloat(p.rating) || 0;
+
+      const card = document.createElement('div');
+      card.className = 'phone-card';
+      card.style.animationDelay = (i * 0.04) + 's';
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div>
+            <div class="card-brand">${esc(p.brand) || '—'}</div>
+            <div class="card-name">${esc(p.phone_name) || 'Unknown Phone'}</div>
+          </div>
+          <div class="card-rating">
+            <div class="stars" title="${ratingNum}/5">${stars(ratingNum)}</div>
+            <div class="rating-val">${ratingNum ? ratingNum.toFixed(1) : '—'}</div>
+          </div>
+        </div>
+
+        <div class="card-specs">
+          <div class="spec-item">
+            <div class="spec-key">Processor</div>
+            <div class="spec-val">${esc(p.processor) || '—'}</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">RAM / Storage</div>
+            <div class="spec-val">${esc(p.RAM_Storage) || '—'}</div>
+          </div>
+        </div>
+
+        ${pros.length || cons.length ? `
+        <div class="card-pros-cons">
+          ${pros.length ? `
+          <div class="pc-block">
+            <div class="pc-title pro">✦ Pros</div>
+            <ul class="pc-list pro-list">
+              ${pros.slice(0,3).map(x => `<li>${esc(x)}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+          ${cons.length ? `
+          <div class="pc-block">
+            <div class="pc-title con">✦ Cons</div>
+            <ul class="pc-list con-list">
+              ${cons.slice(0,3).map(x => `<li>${esc(x)}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+        </div>` : ''}
+
+        <div class="card-footer">
+          <div class="card-price">${fmtPrice(p.Amazon_price)} <small>Amazon</small></div>
+          <a href="https://www.amazon.in/s?k=${encodeURIComponent((p.phone_name||'')+ ' '+(p.brand||''))}"
+             target="_blank" class="card-btn">Buy →</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  /* ── TABLE ── */
+  function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    filtered.forEach(p => {
+      const pros = splitList(p.pros);
+      const cons = splitList(p.cons);
+      const ratingNum = parseFloat(p.rating) || 0;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="td-name">${esc(p.phone_name) || '—'}</div>
+          <div class="td-brand">${esc(p.brand) || '—'}</div>
+        </td>
+        <td><span class="td-tag">${esc(p.brand) || '—'}</span></td>
+        <td>${esc(p.processor) || '—'}</td>
+        <td>${esc(p.RAM_Storage) || '—'}</td>
+        <td class="td-price">${fmtPrice(p.Amazon_price)}</td>
+        <td class="td-pros">${pros.slice(0,2).map(x=>'✓ '+esc(x)).join('<br>')}</td>
+        <td class="td-cons">${cons.slice(0,2).map(x=>'✗ '+esc(x)).join('<br>')}</td>
+        <td>
+          <div class="td-stars">${stars(ratingNum)}</div>
+          <div style="font-size:11px;color:var(--muted)">${ratingNum ? ratingNum.toFixed(1)+'/5' : '—'}</div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ══════════════════════════════════
+     INIT
+  ══════════════════════════════════ */
+  loadData();
 </script>
 </body>
 </html>
