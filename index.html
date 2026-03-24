@@ -11,21 +11,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #07090f;
-      --surf:     #0d1017;
-      --card:     #111520;
-      --b1:       rgba(148,163,184,0.09);
-      --b2:       rgba(99,179,237,0.20);
-      --accent:   #3b82f6;
-      --accentL:  #60a5fa;
-      --green:    #22d3a5;
-      --gold:     #f59e0b;
-      --muted:    #4b5672;
-      --sub:      #8899b4;
-      --text:     #dde3f0;
-      --white:    #f1f5ff;
-      --r:        16px;
-      --font:     'Outfit', sans-serif;
+      --bg:      #07090f;
+      --card:    #111520;
+      --b1:      rgba(148,163,184,0.09);
+      --b2:      rgba(99,179,237,0.22);
+      --accent:  #3b82f6;
+      --accentL: #60a5fa;
+      --green:   #22d3a5;
+      --gold:    #f59e0b;
+      --muted:   #4b5672;
+      --sub:     #8899b4;
+      --text:    #dde3f0;
+      --white:   #f1f5ff;
+      --r:       16px;
+      --font:    'Outfit', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -40,15 +39,15 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(7,9,15,0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(7,9,15,0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--b1);
-      padding: 0 clamp(14px,4%,52px);
-      height: 62px;
+      padding: 0 clamp(14px,4%,56px);
+      height: 64px;
       display: flex; align-items: center; gap: 16px;
     }
     .logo {
@@ -56,22 +55,22 @@
       text-decoration: none; flex-shrink: 0;
     }
     .logo-ico {
-      width: 32px; height: 32px; border-radius: 9px;
+      width: 34px; height: 34px; border-radius: 9px;
       background: var(--accent);
       display: flex; align-items: center; justify-content: center;
     }
-    .logo-ico svg { width: 17px; height: 17px; fill: #fff; }
+    .logo-ico svg { width: 18px; height: 18px; fill: #fff; }
     .logo-name {
-      font-size: 18px; font-weight: 800;
+      font-size: 19px; font-weight: 800;
       color: var(--white); letter-spacing: -0.5px;
     }
     .logo-name span { color: var(--accentL); }
 
-    .search-box {
+    .search-wrap {
       flex: 1; max-width: 460px; margin-left: auto;
       position: relative;
     }
-    .search-box svg {
+    .search-wrap svg {
       position: absolute; left: 13px; top: 50%;
       transform: translateY(-50%);
       width: 15px; height: 15px;
@@ -82,7 +81,7 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--b1);
       border-radius: 50px;
-      padding: 9px 16px 9px 36px;
+      padding: 9px 18px 9px 37px;
       color: var(--text);
       font-family: var(--font);
       font-size: 13px; font-weight: 400;
@@ -94,192 +93,185 @@
       border-color: var(--accent);
       background: rgba(59,130,246,0.05);
     }
-    #resultCount {
+    #countBadge {
       font-size: 12px; font-weight: 600;
       color: var(--muted);
       white-space: nowrap; flex-shrink: 0;
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--b1);
-      padding: 5px 12px; border-radius: 50px;
+      padding: 5px 13px; border-radius: 50px;
     }
-    #resultCount b { color: var(--accentL); }
+    #countBadge b { color: var(--accentL); }
 
-    /* PAGE HEADER */
-    .page-head {
-      padding: 40px clamp(14px,4%,52px) 24px;
+    /* ── HERO ── */
+    .hero {
+      padding: 42px clamp(14px,4%,56px) 26px;
       position: relative; overflow: hidden;
     }
-    .page-head::before {
+    .hero::before {
       content: '';
       position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse 55% 100% at 5% 50%, rgba(59,130,246,0.09), transparent 65%),
-        radial-gradient(ellipse 40% 80% at 95% 50%, rgba(34,211,165,0.06), transparent 65%);
+        radial-gradient(ellipse 60% 120% at 0% 50%, rgba(59,130,246,0.09), transparent 65%),
+        radial-gradient(ellipse 45% 90%  at 100% 50%, rgba(34,211,165,0.06), transparent 65%);
     }
-    .ph-inner { position: relative; }
-    .ph-tag {
+    .hero-inner { position: relative; }
+    .live-badge {
       display: inline-flex; align-items: center; gap: 7px;
       font-size: 11px; font-weight: 700;
       letter-spacing: 1.6px; text-transform: uppercase;
       color: var(--accentL);
-      border: 1px solid rgba(99,179,237,0.2);
-      border-radius: 50px; padding: 4px 13px;
-      margin-bottom: 12px;
+      border: 1px solid rgba(99,179,237,0.22);
+      border-radius: 50px; padding: 4px 14px;
+      margin-bottom: 13px;
     }
-    .ph-dot {
+    .pulse-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: var(--green);
       animation: blink 1.5s ease infinite;
     }
-    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.2} }
-    .ph-title {
-      font-size: clamp(22px,4vw,34px);
-      font-weight: 800; letter-spacing: -1px;
-      color: var(--white); margin-bottom: 6px;
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+    .hero-title {
+      font-size: clamp(24px,4vw,36px);
+      font-weight: 800; letter-spacing: -1.1px;
+      color: var(--white); margin-bottom: 7px;
     }
-    .ph-title span {
+    .hero-title span {
       background: linear-gradient(90deg, var(--accent), var(--green));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .ph-sub { color: var(--sub); font-size: 14px; }
+    .hero-sub { color: var(--sub); font-size: 14px; }
 
-    /* BRAND PILLS */
+    /* ── BRAND PILLS ── */
     .brand-bar {
-      padding: 0 clamp(14px,4%,52px) 22px;
+      padding: 0 clamp(14px,4%,56px) 24px;
       display: flex; align-items: center; gap: 10px;
     }
-    .brand-bar-label {
+    .bar-label {
       font-size: 10px; font-weight: 700;
-      letter-spacing: 1.4px; text-transform: uppercase;
+      letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--muted); flex-shrink: 0;
     }
-    #brandPills {
+    #pillsWrap {
       display: flex; gap: 7px;
       overflow-x: auto; scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-    #brandPills::-webkit-scrollbar { display: none; }
+    #pillsWrap::-webkit-scrollbar { display: none; }
     .pill {
       flex-shrink: 0;
-      padding: 5px 15px; border-radius: 50px;
+      padding: 5px 16px; border-radius: 50px;
       border: 1px solid var(--b1);
       font-size: 12px; font-weight: 600;
       color: var(--sub);
       cursor: pointer; background: transparent;
-      transition: all .18s; white-space: nowrap;
       font-family: var(--font);
+      transition: all .18s; white-space: nowrap;
     }
-    .pill:hover { border-color: var(--accent); color: var(--accentL); }
-    .pill.active {
-      background: var(--accent); border-color: var(--accent);
-      color: #fff; font-weight: 700;
-    }
+    .pill:hover  { border-color: var(--accent); color: var(--accentL); }
+    .pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-    /* MAIN */
-    main { padding: 0 clamp(14px,4%,52px) 60px; }
+    /* ── MAIN ── */
+    main { padding: 0 clamp(14px,4%,56px) 64px; }
 
-    /* SPINNER */
-    #spinner {
-      display: flex; flex-direction: column;
+    /* ── STATES ── */
+    .state-box {
+      display: none; flex-direction: column;
       align-items: center; justify-content: center;
-      min-height: 320px; gap: 18px;
+      min-height: 300px; gap: 16px; text-align: center;
     }
-    .spin-ring {
-      width: 48px; height: 48px;
+    .state-box.show { display: flex; }
+
+    /* spinner */
+    #stateLoading .spin-ring {
+      width: 50px; height: 50px;
       border: 3px solid rgba(59,130,246,0.15);
       border-top-color: var(--accent);
       border-radius: 50%;
-      animation: spin .75s linear infinite;
+      animation: spin .72s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    #spinner p { color: var(--muted); font-size: 14px; }
+    #stateLoading p { color: var(--muted); font-size: 14px; }
 
-    /* ERROR */
-    #errorBox {
-      display: none; flex-direction: column;
-      align-items: center; justify-content: center;
-      min-height: 280px; gap: 14px; text-align: center;
-    }
-    .err-ico {
-      font-size: 36px; width: 72px; height: 72px;
-      background: rgba(239,68,68,0.1);
+    /* error */
+    #stateError .err-icon {
+      width: 70px; height: 70px; border-radius: 50%;
+      font-size: 34px;
+      background: rgba(239,68,68,0.10);
       border: 1px solid rgba(239,68,68,0.25);
-      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
-    #errorBox h3 { font-size: 18px; font-weight: 700; color: var(--white); }
-    #errorBox p  { color: var(--sub); font-size: 13px; max-width: 340px; }
+    #stateError h3 { font-size: 18px; font-weight: 700; color: var(--white); }
+    #stateError p  { color: var(--sub); font-size: 13px; max-width: 340px; }
     .retry-btn {
       background: var(--accent); color: #fff;
       border: none; border-radius: 10px;
-      padding: 10px 26px;
+      padding: 10px 28px;
       font-family: var(--font); font-size: 13px; font-weight: 700;
       cursor: pointer; transition: opacity .2s;
     }
     .retry-btn:hover { opacity: .82; }
 
-    /* EMPTY */
-    #emptyBox {
-      display: none; flex-direction: column;
-      align-items: center; justify-content: center;
-      min-height: 240px; gap: 10px; text-align: center;
-    }
-    #emptyBox p { color: var(--sub); font-size: 14px; }
+    /* empty */
+    #stateEmpty .empty-ico { font-size: 44px; }
+    #stateEmpty p { color: var(--sub); }
 
-    /* CARD GRID */
+    /* ── CARD GRID ── */
     #cardGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(294px, 1fr));
       gap: 18px;
     }
+    #cardGrid.show { display: grid; }
 
-    /* CARD */
+    /* ── CARD ── */
     .pcard {
       background: var(--card);
       border: 1px solid var(--b1);
       border-radius: var(--r);
       padding: 20px;
       display: flex; flex-direction: column; gap: 16px;
-      transition: transform .25s, border-color .25s, box-shadow .25s;
-      animation: fadeUp .3s ease both;
+      animation: fadeUp .32s ease both;
+      transition: transform .24s, border-color .24s, box-shadow .24s;
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .pcard:hover {
       transform: translateY(-5px);
       border-color: var(--b2);
-      box-shadow: 0 20px 44px rgba(0,0,0,0.55), 0 0 0 1px rgba(59,130,246,0.1);
+      box-shadow: 0 20px 46px rgba(0,0,0,0.55),
+                  0 0 0 1px rgba(59,130,246,0.10);
     }
-    .pcard-head {
-      display: flex; justify-content: space-between; align-items: flex-start;
+
+    /* card header */
+    .card-head {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
     }
-    .pcard-brand {
+    .card-brand {
       font-size: 10px; font-weight: 700;
-      letter-spacing: 1.6px; text-transform: uppercase;
+      letter-spacing: 1.7px; text-transform: uppercase;
       color: var(--accent); margin-bottom: 3px;
     }
-    .pcard-name {
+    .card-name {
       font-size: 16px; font-weight: 800;
-      color: var(--white); letter-spacing: -0.3px;
-      line-height: 1.25;
+      color: var(--white); letter-spacing: -0.3px; line-height: 1.25;
     }
 
-    /* stars */
-    .star-block { text-align: right; flex-shrink: 0; margin-left: 12px; }
-    .star-row {
-      display: flex; gap: 2px; justify-content: flex-end;
-      margin-bottom: 3px;
+    /* star rating block */
+    .rating-block { text-align: right; flex-shrink: 0; }
+    .stars-row {
+      display: flex; gap: 2px; justify-content: flex-end; margin-bottom: 3px;
     }
-    .star-row svg { width: 14px; height: 14px; }
-    .s-filled { color: var(--gold); }
-    .s-half   { color: var(--gold); }
-    .s-empty  { color: var(--muted); }
-    .star-num { font-size: 11px; font-weight: 700; color: var(--sub); }
+    .stars-row svg { width: 14px; height: 14px; }
+    .s-full  { color: var(--gold); }
+    .s-half  { color: var(--gold); }
+    .s-empty { color: var(--muted); }
+    .rating-label { font-size: 11px; font-weight: 700; color: var(--sub); }
 
-    /* specs */
+    /* spec grid */
     .spec-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
     }
@@ -289,7 +281,7 @@
       border-radius: 9px;
       padding: 9px 11px;
     }
-    .spec-cell.wide { grid-column: 1/-1; }
+    .spec-cell.wide { grid-column: 1 / -1; }
     .sc-key {
       font-size: 9px; font-weight: 700;
       letter-spacing: 1.2px; text-transform: uppercase;
@@ -300,38 +292,36 @@
       color: var(--text); word-break: break-word;
     }
 
-    /* pros */
-    .pros-title {
+    /* highlights (pros) */
+    .highlights-title {
       font-size: 10px; font-weight: 700;
       letter-spacing: 1px; text-transform: uppercase;
       color: var(--green); margin-bottom: 6px;
     }
-    .pros-list {
-      list-style: none; display: flex; flex-direction: column; gap: 4px;
+    .highlights-list {
+      list-style: none; display: flex; flex-direction: column; gap: 5px;
     }
-    .pros-list li {
+    .highlights-list li {
       font-size: 12px; color: var(--sub);
-      display: flex; gap: 6px; align-items: flex-start;
-      line-height: 1.4;
+      display: flex; gap: 7px; align-items: flex-start; line-height: 1.4;
     }
-    .pros-list li::before {
+    .highlights-list li::before {
       content: '✦';
-      color: var(--green); flex-shrink: 0;
-      font-size: 9px; margin-top: 3px;
+      color: var(--green); font-size: 9px;
+      flex-shrink: 0; margin-top: 3px;
     }
 
-    /* footer */
-    .pcard-foot {
+    /* card footer */
+    .card-foot {
       display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid var(--b1);
+      padding-top: 14px; border-top: 1px solid var(--b1);
     }
-    .price-label {
+    .price-lbl {
       font-size: 10px; color: var(--muted);
       text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px;
     }
     .price-val {
-      font-size: 19px; font-weight: 800;
+      font-size: 20px; font-weight: 800;
       color: var(--white); letter-spacing: -0.5px;
     }
     .buy-btn {
@@ -341,14 +331,14 @@
       padding: 9px 18px;
       font-family: var(--font); font-size: 12px; font-weight: 700;
       cursor: pointer; text-decoration: none;
-      transition: background .18s, transform .18s;
+      transition: background .18s, transform .15s;
     }
-    .buy-btn:hover { background: var(--accentL); transform: scale(1.03); }
-    .buy-btn svg { width: 12px; height: 12px; }
+    .buy-btn:hover { background: var(--accentL); transform: scale(1.04); }
+    .buy-btn svg   { width: 12px; height: 12px; }
 
-    /* PAGE FOOTER */
+    /* ── PAGE FOOTER ── */
     footer {
-      padding: 22px clamp(14px,4%,52px);
+      padding: 22px clamp(14px,4%,56px);
       border-top: 1px solid var(--b1);
       display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 10px;
@@ -356,12 +346,11 @@
     footer p { font-size: 12px; color: var(--muted); }
     footer a  { color: var(--accentL); text-decoration: none; }
 
-    /* RESPONSIVE */
-    @media (max-width: 560px) {
-      #resultCount { display: none; }
-      #cardGrid { grid-template-columns: 1fr; }
-      .spec-grid { grid-template-columns: 1fr; }
-      .spec-cell.wide { grid-column: 1; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 580px) {
+      #countBadge { display: none; }
+      #cardGrid   { grid-template-columns: 1fr; }
+      .spec-grid  { grid-template-columns: 1fr; }
     }
     @media (max-width: 400px) {
       .logo-name { font-size: 16px; }
@@ -370,268 +359,269 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ══ NAV ══ -->
 <nav>
   <a href="#" class="logo">
     <div class="logo-ico">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="1" width="14" height="22" rx="3"/>
-        <rect x="9" y="4" width="6" height="1.5" rx="0.75" fill="rgba(0,0,0,0.4)"/>
-        <circle cx="12" cy="19" r="1.3" fill="rgba(0,0,0,0.4)"/>
-      </svg>
+      <!-- phone icon -->
+      <svg viewBox="0 0 24 24"><rect x="5" y="1" width="14" height="22" rx="3"/><rect x="9" y="4" width="6" height="1.5" rx="0.75" fill="rgba(0,0,0,0.35)"/><circle cx="12" cy="19" r="1.3" fill="rgba(0,0,0,0.35)"/></svg>
     </div>
     <span class="logo-name">Specs<span>Finder</span></span>
   </a>
 
-  <div class="search-box">
+  <div class="search-wrap">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
     </svg>
-    <input id="searchInput" type="text" placeholder="Search by name or brand…" autocomplete="off"/>
+    <input id="searchInput" type="text" placeholder="Search by phone name or brand…" autocomplete="off"/>
   </div>
 
-  <div id="resultCount"><b>—</b> phones</div>
+  <div id="countBadge"><b>—</b> phones</div>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="page-head">
-  <div class="ph-inner">
-    <div class="ph-tag"><span class="ph-dot"></span>Live Database</div>
-    <h1 class="ph-title">Find Your <span>Perfect Phone</span></h1>
-    <p class="ph-sub">Real specs · Honest ratings · Best prices on Amazon</p>
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="live-badge"><span class="pulse-dot"></span>Live Database</div>
+    <h1 class="hero-title">Find Your <span>Perfect Phone</span></h1>
+    <p class="hero-sub">Real specs · Honest ratings · Best prices on Amazon</p>
   </div>
 </div>
 
-<!-- BRAND FILTER -->
+<!-- ══ BRAND FILTER ══ -->
 <div class="brand-bar">
-  <span class="brand-bar-label">Brand</span>
-  <div id="brandPills">
+  <span class="bar-label">Brand</span>
+  <div id="pillsWrap">
     <button class="pill active" data-brand="all">All</button>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- ══ CONTENT ══ -->
 <main>
-  <div id="spinner">
+
+  <!-- Loading -->
+  <div id="stateLoading" class="state-box show">
     <div class="spin-ring"></div>
-    <p>Loading specs database…</p>
+    <p>Fetching specs database…</p>
   </div>
 
-  <div id="errorBox">
-    <div class="err-ico">⚠️</div>
-    <h3>Failed to Load Data</h3>
-    <p id="errMsg">Could not connect to the database. Check your internet connection and try again.</p>
+  <!-- Error -->
+  <div id="stateError" class="state-box">
+    <div class="err-icon">⚠️</div>
+    <h3>Could not load data</h3>
+    <p id="errMsg">Failed to reach the API. Check your connection and try again.</p>
     <button class="retry-btn" onclick="loadData()">↺ Retry</button>
   </div>
 
-  <div id="emptyBox">
-    <div style="font-size:42px">🔍</div>
-    <p>No phones found. Try a different search or brand.</p>
+  <!-- Empty search result -->
+  <div id="stateEmpty" class="state-box">
+    <div class="empty-ico">🔍</div>
+    <p>No phones match your search. Try a different keyword.</p>
   </div>
 
+  <!-- Cards -->
   <div id="cardGrid"></div>
+
 </main>
 
-<!-- PAGE FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <p>© 2025 <a href="#">SpecsFinder</a> · Powered by <a href="https://sheetdb.io" target="_blank">SheetDB</a></p>
   <p id="ts"></p>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════
-   EXACT COLUMN KEY MAPPING (case-sensitive)
-   matches your Google Sheet / SheetDB JSON
-═══════════════════════════════════════════ */
-const API        = 'https://sheetdb.io/api/v1/230q64nidgmrh';
+/* ─────────────────────────────────────────────────────
+   EXACT KEY MAP  (matches your Google Sheet columns)
+   ───────────────────────────────────────────────────── */
+const API_URL = 'https://sheetdb.io/api/v1/230q64nidgmrh';
 
-const K_NAME     = 'phone name';   // has a space — exact key
-const K_BRAND    = 'brand';
-const K_CPU      = 'processor';
-const K_RAM      = 'RAM_Storag';   // no trailing 'e' — as provided
-const K_PRICE    = 'Amazon_price';
-const K_RATING   = 'rating';       // 1–10 scale; we divide by 2 for 5-star UI
-const K_PROS     = 'pros';         // comma-separated string
+const COL_NAME    = 'phone name';   // ← space included, lowercase
+const COL_BRAND   = 'brand';
+const COL_CPU     = 'processor';
+const COL_RAM     = 'RAM_Storage';  // ← exact key (capital R, capital S, underscore)
+const COL_PRICE   = 'Amazon_price';
+const COL_RATING  = 'rating';       // 1–10 → divide by 2 for 5-star display
+const COL_PROS    = 'pros';         // comma-separated highlights
 
-let allData     = [];
+/* state */
+let allRows     = [];
 let filtered    = [];
 let activeBrand = 'all';
 
-/* ═══════════════════════════════════════════
-   FETCH DATA
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────
+   FETCH
+   ───────────────────────────────────────────────────── */
 async function loadData() {
-  ui('spinner');
+  setState('loading');
   try {
-    const res = await fetch(API);
-    if (!res.ok) throw new Error('HTTP ' + res.status + ' — ' + res.statusText);
-    const json = await res.json();
-    if (!Array.isArray(json) || json.length === 0)
-      throw new Error('The API returned an empty dataset.');
+    const res  = await fetch(API_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0)
+      throw new Error('API returned an empty dataset.');
 
-    allData  = json;
-    filtered = [...allData];
+    allRows  = data;
+    filtered = [...allRows];
 
-    buildBrands();
-    render();
-    setCount(filtered.length, allData.length);
+    buildBrandPills();
+    renderCards();
+    updateCount(filtered.length, allRows.length);
     document.getElementById('ts').textContent =
       'Updated: ' + new Date().toLocaleString('en-IN');
-    ui('cards');
-  } catch (e) {
-    console.error('SpecsFinder fetch error:', e);
-    document.getElementById('errMsg').textContent = e.message;
-    ui('error');
+
+  } catch (err) {
+    console.error('[SpecsFinder]', err);
+    document.getElementById('errMsg').textContent = err.message;
+    setState('error');
   }
 }
 
-/* ═══════════════════════════════════════════
-   UI STATE MACHINE
-═══════════════════════════════════════════ */
-function ui(state) {
-  document.getElementById('spinner').style.display  = state === 'spinner' ? 'flex'  : 'none';
-  document.getElementById('errorBox').style.display = state === 'error'   ? 'flex'  : 'none';
-  document.getElementById('emptyBox').style.display = state === 'empty'   ? 'flex'  : 'none';
-  document.getElementById('cardGrid').style.display = state === 'cards'   ? 'grid'  : 'none';
+/* ─────────────────────────────────────────────────────
+   STATE HELPER
+   ───────────────────────────────────────────────────── */
+function setState(s) {
+  document.getElementById('stateLoading').className = 'state-box' + (s === 'loading' ? ' show' : '');
+  document.getElementById('stateError'  ).className = 'state-box' + (s === 'error'   ? ' show' : '');
+  document.getElementById('stateEmpty'  ).className = 'state-box' + (s === 'empty'   ? ' show' : '');
+  document.getElementById('cardGrid'    ).className = 'cardGrid-cls' + (s === 'cards' ? '' : '');  // handled below
+  document.getElementById('cardGrid').classList.toggle('show', s === 'cards');
 }
 
-function setCount(n, total) {
-  document.getElementById('resultCount').innerHTML =
-    n === total ? `<b>${n}</b> phones` : `<b>${n}</b> / ${total} phones`;
+function updateCount(n, total) {
+  const el = document.getElementById('countBadge');
+  el.innerHTML = n === total
+    ? `<b>${n}</b> phones`
+    : `<b>${n}</b> / ${total} phones`;
 }
 
-/* ═══════════════════════════════════════════
-   BUILD BRAND FILTER PILLS
-═══════════════════════════════════════════ */
-function buildBrands() {
+/* ─────────────────────────────────────────────────────
+   BRAND PILLS  (built from live data)
+   ───────────────────────────────────────────────────── */
+function buildBrandPills() {
   const brands = [...new Set(
-    allData.map(p => safe(p[K_BRAND])).filter(Boolean)
+    allRows.map(r => str(r[COL_BRAND])).filter(Boolean)
   )].sort();
 
-  const wrap = document.getElementById('brandPills');
-  // keep only the first "All" button, remove old brand pills
-  while (wrap.children.length > 1) wrap.removeChild(wrap.lastChild);
+  const wrap = document.getElementById('pillsWrap');
+  // remove old brand pills, keep "All"
+  [...wrap.querySelectorAll('[data-brand]:not([data-brand="all"])')].forEach(b => b.remove());
 
-  brands.forEach(b => {
+  brands.forEach(brand => {
     const btn = document.createElement('button');
-    btn.className    = 'pill';
-    btn.dataset.brand = b;
-    btn.textContent  = b;
+    btn.className = 'pill';
+    btn.dataset.brand = brand;
+    btn.textContent   = brand;
     btn.addEventListener('click', function () {
-      activeBrand = b;
-      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      activeBrand = brand;
+      wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       this.classList.add('active');
       applyFilters();
     });
     wrap.appendChild(btn);
   });
 
-  // wire up the "All" pill
-  wrap.firstElementChild.addEventListener('click', function () {
+  // "All" pill
+  wrap.querySelector('[data-brand="all"]').addEventListener('click', function () {
     activeBrand = 'all';
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
     this.classList.add('active');
     applyFilters();
   });
 }
 
-/* ═══════════════════════════════════════════
-   SEARCH + BRAND FILTER
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────
+   SEARCH + FILTER
+   ───────────────────────────────────────────────────── */
 document.getElementById('searchInput').addEventListener('input', applyFilters);
 
 function applyFilters() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
 
-  filtered = allData.filter(p => {
-    // brand filter
+  filtered = allRows.filter(row => {
+    /* brand pill filter */
     const brandOk = activeBrand === 'all' ||
-      safe(p[K_BRAND]).toLowerCase() === activeBrand.toLowerCase();
+      str(row[COL_BRAND]).toLowerCase() === activeBrand.toLowerCase();
 
-    // search filter — match name, brand, cpu, or RAM
-    const searchOk = !q || [
-      p[K_NAME], p[K_BRAND], p[K_CPU], p[K_RAM]
-    ].some(v => safe(v).toLowerCase().includes(q));
+    /* search: match phone name OR brand */
+    const searchOk = !q ||
+      str(row[COL_NAME ]).toLowerCase().includes(q) ||
+      str(row[COL_BRAND]).toLowerCase().includes(q);
 
     return brandOk && searchOk;
   });
 
-  setCount(filtered.length, allData.length);
-  render();
+  updateCount(filtered.length, allRows.length);
+  renderCards();
 }
 
-/* ═══════════════════════════════════════════
+/* ─────────────────────────────────────────────────────
    RENDER CARDS
-═══════════════════════════════════════════ */
-function render() {
+   ───────────────────────────────────────────────────── */
+function renderCards() {
   const grid = document.getElementById('cardGrid');
 
-  if (filtered.length === 0) {
-    ui('empty');
-    return;
-  }
-
-  ui('cards');
+  if (filtered.length === 0) { setState('empty'); return; }
+  setState('cards');
   grid.innerHTML = '';
 
-  filtered.forEach((p, i) => {
-    // Pull values using exact keys
-    const name     = safe(p[K_NAME])  || 'Unknown Phone';
-    const brand    = safe(p[K_BRAND]) || '—';
-    const cpu      = safe(p[K_CPU])   || '—';
-    const ram      = safe(p[K_RAM])   || '—';
-    const price    = formatPrice(p[K_PRICE]);
+  filtered.forEach((row, idx) => {
+    /* ── pull values with EXACT keys ── */
+    const name   = str(row[COL_NAME])   || 'Unknown Phone';
+    const brand  = str(row[COL_BRAND])  || '—';
+    const cpu    = str(row[COL_CPU])    || '—';
+    const ram    = str(row[COL_RAM])    || '—';   // COL_RAM = 'RAM_Storage'
+    const price  = fmtPrice(row[COL_PRICE]);
 
-    // Rating: 1–10 → divide by 2 → 1–5 for star display
-    const r10      = parseFloat(p[K_RATING]) || 0;
-    const r5       = r10 / 2;
+    /* rating: 1-10 scale → halve to get 1-5 for star display */
+    const raw10  = parseFloat(row[COL_RATING]) || 0;
+    const star5  = raw10 / 2;                        // e.g. 9.5 → 4.75 → rounds to 5 stars
 
-    // Pros: comma-separated string → array
-    const prosArr  = parsePros(p[K_PROS]);
+    /* pros/highlights */
+    const pros   = splitList(row[COL_PROS]);
 
-    // Amazon search link
-    const buyURL   = 'https://www.amazon.in/s?k=' +
-      encodeURIComponent(brand + ' ' + name);
+    /* Amazon search link */
+    const buyURL = `https://www.amazon.in/s?k=${encodeURIComponent(brand + ' ' + name)}`;
 
     const card = document.createElement('div');
     card.className = 'pcard';
-    card.style.animationDelay = Math.min(i * 0.045, 0.55) + 's';
+    card.style.animationDelay = Math.min(idx * 0.045, 0.5) + 's';
 
     card.innerHTML = `
-      <div class="pcard-head">
+      <div class="card-head">
         <div>
-          <div class="pcard-brand">${x(brand)}</div>
-          <div class="pcard-name">${x(name)}</div>
+          <div class="card-brand">${esc(brand)}</div>
+          <div class="card-name">${esc(name)}</div>
         </div>
-        <div class="star-block">
-          <div class="star-row">${buildStars(r5)}</div>
-          <div class="star-num">${r10 ? r10.toFixed(1) + ' / 10' : 'No rating'}</div>
+        <div class="rating-block">
+          <div class="stars-row">${starsHTML(star5)}</div>
+          <div class="rating-label">${raw10 ? raw10.toFixed(1) + ' / 10' : 'No rating'}</div>
         </div>
       </div>
 
       <div class="spec-grid">
         <div class="spec-cell wide">
           <div class="sc-key">Processor</div>
-          <div class="sc-val">${x(cpu)}</div>
+          <div class="sc-val">${esc(cpu)}</div>
         </div>
         <div class="spec-cell wide">
           <div class="sc-key">RAM / Storage</div>
-          <div class="sc-val">${x(ram)}</div>
+          <div class="sc-val">${esc(ram)}</div>
         </div>
       </div>
 
-      ${prosArr.length ? `
-        <div>
-          <div class="pros-title">✦ Highlights</div>
-          <ul class="pros-list">
-            ${prosArr.slice(0, 4).map(t => `<li>${x(t)}</li>`).join('')}
-          </ul>
-        </div>` : ''}
+      ${pros.length ? `
+      <div>
+        <div class="highlights-title">✦ Highlights</div>
+        <ul class="highlights-list">
+          ${pros.slice(0, 4).map(p => `<li>${esc(p)}</li>`).join('')}
+        </ul>
+      </div>` : ''}
 
-      <div class="pcard-foot">
+      <div class="card-foot">
         <div>
-          <div class="price-label">Amazon Price</div>
-          <div class="price-val">${x(price)}</div>
+          <div class="price-lbl">Amazon Price</div>
+          <div class="price-val">${esc(price)}</div>
         </div>
         <a href="${buyURL}" target="_blank" rel="noopener" class="buy-btn">
           Buy Now
@@ -641,37 +631,41 @@ function render() {
         </a>
       </div>
     `;
-
     grid.appendChild(card);
   });
 }
 
-/* ═══════════════════════════════════════════
-   STAR BUILDER — 5-star SVG with half-star
-   Input: rating on 1-5 scale (float)
-═══════════════════════════════════════════ */
-function buildStars(r5) {
+/* ─────────────────────────────────────────────────────
+   STAR SVG BUILDER
+   Input  : rating on 0–5 scale (float, e.g. 4.75)
+   Output : 5 SVG stars — full / half / empty
+   Rule   : rating 9.5 / 2 = 4.75  → 5 full stars
+            rating 7.0 / 2 = 3.5   → 3 full + 1 half + 1 empty
+   ───────────────────────────────────────────────────── */
+function starsHTML(r5) {
+  // round to nearest 0.5
+  const rounded = Math.round(r5 * 2) / 2;
   let html = '';
   for (let i = 1; i <= 5; i++) {
-    if (r5 >= i) {
-      // full star
-      html += `<svg class="s-filled" viewBox="0 0 24 24" fill="currentColor">
+    if (rounded >= i) {
+      /* full star */
+      html += `<svg class="s-full" viewBox="0 0 24 24" fill="currentColor">
         <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
       </svg>`;
-    } else if (r5 >= i - 0.5) {
-      // half star (left half filled)
-      const uid = 'h' + i + '_' + Math.random().toString(36).slice(2,6);
+    } else if (rounded >= i - 0.5) {
+      /* half star — left half filled via clipPath */
+      const cid = `hc_${i}_${Math.random().toString(36).slice(2,7)}`;
       html += `<svg class="s-half" viewBox="0 0 24 24">
         <defs>
-          <clipPath id="${uid}"><rect x="0" y="0" width="12" height="24"/></clipPath>
+          <clipPath id="${cid}"><rect x="0" y="0" width="12" height="24"/></clipPath>
         </defs>
         <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
           fill="var(--muted)"/>
         <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
-          fill="currentColor" clip-path="url(#${uid})"/>
+          fill="currentColor" clip-path="url(#${cid})"/>
       </svg>`;
     } else {
-      // empty star
+      /* empty star */
       html += `<svg class="s-empty" viewBox="0 0 24 24" fill="currentColor">
         <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
       </svg>`;
@@ -680,44 +674,39 @@ function buildStars(r5) {
   return html;
 }
 
-/* ═══════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────
+   UTILITY FUNCTIONS
+   ───────────────────────────────────────────────────── */
 
-// Safe string coercion
-function safe(v) {
-  return String(v == null ? '' : v).trim();
-}
+/** Safe string from any value */
+function str(v) { return String(v == null ? '' : v).trim(); }
 
-// XSS escape
-function x(s) {
-  return safe(s)
+/** XSS escape */
+function esc(s) {
+  return str(s)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// Format Amazon price — handles ₹, $, plain numbers, ranges, N/A, etc.
-function formatPrice(v) {
-  const s = safe(v);
+/** Format price → ₹ with Indian locale, handles symbols, N/A, ranges */
+function fmtPrice(v) {
+  const s = str(v);
   if (!s || s.toLowerCase() === 'n/a' || s === '0') return 'N/A';
-  // already has a currency symbol
-  if (/[₹$£€]/.test(s)) return s;
-  // plain number
+  if (/[₹$£€]/.test(s)) return s;            // already has symbol
   const n = parseFloat(s.replace(/[^0-9.]/g, ''));
-  if (!isNaN(n) && n > 0) return '₹' + n.toLocaleString('en-IN');
-  return s;
+  return (!isNaN(n) && n > 0) ? '₹' + n.toLocaleString('en-IN') : s;
 }
 
-// Split pros string into array
-function parsePros(v) {
-  const s = safe(v);
+/** Split comma / semicolon / pipe / newline separated string into array */
+function splitList(v) {
+  const s = str(v);
   if (!s) return [];
-  return s.split(/[,;|\n]+/).map(t => t.trim()).filter(Boolean);
+  return s.split(/[,;|\n]+/).map(x => x.trim()).filter(Boolean);
 }
 
-/* ═══════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────
+   BOOT
+   ───────────────────────────────────────────────────── */
 loadData();
 </script>
 </body>
